@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+class Violation {
+private:
+    string vehicleNo, ownerName, violationType;
+    int fineAmount;
+    static int totalViolations;
+
+public:
+    void input() {
+        cout << "\nEnter Vehicle Number: ";
+        cin >> vehicleNo;
+
+        cout << "Enter Owner Name: ";
+        cin >> ownerName;
+
+        cout << "Violation Types: Signal / Speed / Parking\n";
+        cout << "Enter Violation Type: ";
+        cin >> violationType;
+
+        if (violationType == "Signal")
+            fineAmount = 1000;
+        else if (violationType == "Speed")
+            fineAmount = 2000;
+        else if (violationType == "Parking")
+            fineAmount = 500;
+        else {
+            cout << "Invalid violation type!\n";
+            fineAmount = 0;
+        }
+
+        if (fineAmount > 0)
+            totalViolations++;
+    }
+
+    void display() {
+        cout << "\nVehicle No: " << vehicleNo;
+        cout << "\nOwner Name: " << ownerName;
+        cout << "\nViolation Type: " << violationType;
+        cout << "\nFine Amount: Rs." << fineAmount << endl;
+    }
+
+    static void showTotal() {
+        cout << "\nTotal Violations Recorded: " << totalViolations << endl;
+    }
+};
+
+int Violation::totalViolations = 0;
+
+int main() {
+    int n;
+    cout << "Enter number of violations: ";
+    cin >> n;
+
+    Violation v[50];
+
+    for (int i = 0; i < n; i++) {
+        v[i].input();
+    }
+
+    cout << "\n--- Violation Reports ---\n";
+    for (int i = 0; i < n; i++) {
+        v[i].display();
+    }
+
+    Violation::showTotal();
+
+    cout << "\nEncapsulation protects violation data, and modular functions reduce repeated code and calculation errors.";
+
+    return 0;
+}
