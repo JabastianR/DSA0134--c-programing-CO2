@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std;
+
+class Event {
+private:
+    string eventName, participantName;
+    int registrationID;
+    static int totalParticipants;
+
+public:
+    void registerParticipant() {
+        cout << "\nEnter Event Name: ";
+        cin >> eventName;
+
+        cout << "Enter Participant Name: ";
+        cin >> participantName;
+
+        cout << "Enter Registration ID: ";
+        cin >> registrationID;
+
+        totalParticipants++;
+    }
+
+    int getRegistrationID() {
+        return registrationID;
+    }
+
+    void display() {
+        cout << "\nEvent Name: " << eventName;
+        cout << "\nParticipant Name: " << participantName;
+        cout << "\nRegistration ID: " << registrationID << endl;
+    }
+
+    static void showTotal() {
+        cout << "\nTotal Participants: " << totalParticipants << endl;
+    }
+};
+
+int Event::totalParticipants = 0;
+
+int main() {
+    int n, duplicate;
+    cout << "Enter number of registrations: ";
+    cin >> n;
+
+    Event e[50];
+
+    for (int i = 0; i < n; i++) {
+        do {
+            duplicate = 0;
+            e[i].registerParticipant();
+
+            for (int j = 0; j < i; j++) {
+                if (e[i].getRegistrationID() == e[j].getRegistrationID()) {
+                    cout << "Duplicate Registration ID! Enter again.\n";
+                    duplicate = 1;
+                    break;
+                }
+            }
+        } while (duplicate == 1);
+    }
+
+    cout << "\n--- Event Registration Details ---\n";
+    for (int i = 0; i < n; i++) {
+        e[i].display();
+    }
+
+    Event::showTotal();
+
+    cout << "\nDuplicate checking ensures unique registration and improves event handling.";
+
+    return 0;
+}
