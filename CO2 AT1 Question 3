@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+class Warehouse {
+private:
+    int itemID, quantity;
+    string name, location;
+    static int totalItemsStored;
+
+public:
+    void addItem() {
+        cout << "\nEnter Item ID: ";
+        cin >> itemID;
+
+        cout << "Enter Item Name: ";
+        cin >> name;
+
+        cout << "Enter Quantity: ";
+        cin >> quantity;
+
+        cout << "Enter Location: ";
+        cin >> location;
+
+        if (quantity < 0) {
+            cout << "Invalid stock level!\n";
+            quantity = 0;
+        }
+
+        totalItemsStored += quantity;
+    }
+
+    void removeItem() {
+        int removeQty;
+        cout << "Enter quantity to remove: ";
+        cin >> removeQty;
+
+        if (removeQty <= quantity && removeQty > 0) {
+            quantity -= removeQty;
+            totalItemsStored -= removeQty;
+        } else {
+            cout << "Invalid removal quantity!\n";
+        }
+    }
+
+    void updateItem() {
+        int newQty;
+        cout << "Enter new quantity: ";
+        cin >> newQty;
+
+        if (newQty >= 0) {
+            totalItemsStored = totalItemsStored - quantity + newQty;
+            quantity = newQty;
+        } else {
+            cout << "Invalid quantity!\n";
+        }
+    }
+
+    void display() {
+        cout << "\nItem ID: " << itemID;
+        cout << "\nItem Name: " << name;
+        cout << "\nQuantity: " << quantity;
+        cout << "\nLocation: " << location << endl;
+    }
+
+    static void showTotal() {
+        cout << "\nTotal Items Stored: " << totalItemsStored << endl;
+    }
+};
+
+int Warehouse::totalItemsStored = 0;
+
+int main() {
+    int n;
+    cout << "Enter number of items: ";
+    cin >> n;  
+    Warehouse w[50];
+    for (int i = 0; i < n; i++) {
+        w[i].addItem();
+    }
+    cout << "\n--- Warehouse Inventory ---\n";
+    for (int i = 0; i < n; i++) {
+        w[i].display();
+    }
+    Warehouse::showTotal();
+    cout << "\nThis design improves accuracy by preventing negative stock and maintaining item records properly.";
+    return 0;
+}
